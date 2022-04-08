@@ -1,0 +1,139 @@
+.box {
+  position: absolute;
+  width: 600px;
+  height: 344px;
+  left: 420px;
+  top: 184px;
+  background: #ffffff;
+  border: 1px solid #f7f7f7;
+  box-sizing: border-box;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.16);
+  border-radius: 30px;
+}
+
+.rect1 {
+  position: relative;
+  width: 538px;
+  height: 82px;
+  left: 30px;
+  top: 50px;
+
+  background: #dcf6e4;
+  border: 1px solid #cce2d3;
+  box-sizing: border-box;
+  border-radius: 10px;
+}
+
+.rect2 {
+  position: absolute;
+  width: 538px;
+  height: 82px;
+  left: 30px;
+  top: 170px;
+
+  background: #f7efd5;
+  border: 1px solid #e2dcc7;
+  box-sizing: border-box;
+  border-radius: 10px;
+}
+
+.startButton {
+  position: absolute;
+  width: 538px;
+  height: 55px;
+  left: 30px;
+  top: 270px;
+
+  background: #4b7bff;
+  border-radius: 12px;
+}
+
+button{
+    cursor: pointer;
+    position: absolute;
+width: 92px;
+height: 24px;
+left: 674px;
+top: 456px;
+
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 24px;
+
+color: #FFFFFF;
+}
+
+.rect1 > img{
+    position: absolute;
+width: 70px;
+height: 70px;
+left: 25px;
+top: 5px;
+
+box-sizing: border-box;
+}
+
+.rect2 > img{
+    position: absolute;
+width: 70px;
+height: 70px;
+left: 25px;
+top: 5px;
+
+box-sizing: border-box;
+}
+
+.rect1 > div > p{
+    position: absolute;
+width: 69px;
+height: 24px;
+left: 110px;
+top: 5px;
+
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 24px;
+/* identical to box height */
+
+
+color: #869189;
+}
+
+.rect1 > div > input{
+    position: absolute;
+    margin-top: 50px;
+    margin-left: 110px;
+    position: absolute;
+
+}
+
+.rect2 > div > p{
+    position: absolute;
+width: 69px;
+height: 24px;
+left: 110px;
+top: 5px;
+
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 24px;
+/* identical to box height */
+
+
+color: #869189;
+}
+
+.rect2 > div > input{
+    position: absolute;
+    margin-top: 50px;
+    margin-left: 110px;
+    position: absolute;
+
+}
+

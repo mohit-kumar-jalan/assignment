@@ -1,0 +1,230 @@
+.App  {
+  position: absolute;
+  width: 1200px;
+  height: 586px;
+  left: 144px;
+  top: 63px;
+
+  background: #ffffff;
+  border: 1px solid #f7f7f7;
+  box-sizing: border-box;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.16);
+  border-radius: 30px;
+}
+.game > h3{
+  right: 0;
+  margin-left: 800px;
+  margin-top: 100px;
+}
+
+.game > h2{
+  margin-left: 800px;
+  color:  #FF6600;
+}
+
+.board {
+  position:absolute ;
+  
+  background: #84A4FB;
+  width: 550px;
+  margin-left: 80px;
+  margin-top: -120px;
+  padding: 8px;
+}
+
+.board > .cell {
+  width: calc(550px / 7 - 8px);
+  height: calc(550px / 7 - 8px);
+  background: white;
+  display: inline-block;
+  box-sizing: border-box;
+  border-radius: 50%;
+  margin: 4px;
+}
+
+.board > .cell[data-player="playerOne"] {
+  background-image: url("./1.png");
+}
+
+.board > .cell[data-player="playertwo"] {
+  background-image: url("./2.png");
+}
+
+.box1{
+  position: absolute;
+  width: 100px;
+  margin-left: 800px;
+}
+
+.rect1_2{
+  position: relative;
+  width: 400px;
+  height: 82px;
+  left: -90px;
+  top: 0px;
+
+  background: #dcf6e4;
+  border: 1px solid #cce2d3;
+  box-sizing: border-box;
+  border-radius: 10px;
+}
+
+.rect2_1{
+  position: absolute;
+  width: 400px;
+  height: 82px;
+  left: -90px;
+  top: 100px;
+
+  background: #f7efd5;
+  border: 1px solid #e2dcc7;
+  box-sizing: border-box;
+  border-radius: 10px;
+}
+
+.rect1_2 > div > p{
+  position: absolute;
+width: 69px;
+height: 24px;
+left: 110px;
+top: 5px;
+
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+color: #869189;
+line-height: 24px;
+}
+
+.rect2_1 > div > p{
+  position: absolute;
+width: 69px;
+height: 24px;
+left: 110px;
+top: 5px;
+
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 24px;
+color: #869189;
+}
+
+.rect1_2 > img{
+  position: absolute;
+width: 70px;
+height: 70px;
+left: 25px;
+top: 5px;
+
+box-sizing: border-box;
+}
+
+.rect2_1 > img{
+  position: absolute;
+width: 70px;
+height: 70px;
+left: 25px;
+top: 5px;
+
+box-sizing: border-box;
+}
+
+.startButton1{
+  position: absolute;
+  width: 369px;
+  height: 55px;
+  left: 730px;
+  top: 400px;
+
+  background: white;
+  color: red;
+  border-radius: 12px;
+}
+
+.score1{
+  position: relative;
+width: 46px;
+height: 24px;
+left: 250px;
+top: 20px;
+
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 24px;
+/* identical to box height */
+
+
+color: #869189;
+
+}
+
+.score2{
+  position: relative;
+width: 46px;
+height: 24px;
+left: 250px;
+top: 20px;
+
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 24px;
+/* identical to box height */
+
+
+color: #869189;
+
+}
+
+.rect1_2 > h5{
+  position: relative;
+width: 6px;
+height: 27px;
+left: 265px;
+top: -10px;
+
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 400;
+font-size: 18px;
+line-height: 27px;
+/* identical to box height */
+
+
+color: #000000;
+}
+
+.rect2_1 > h5{
+  position: relative;
+width: 6px;
+height: 27px;
+left: 265px;
+top: -10px;
+
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 400;
+font-size: 18px;
+line-height: 27px;
+/* identical to box height */
+
+
+color: #000000;
+}
+
+.startButton2{
+  position: absolute;
+  width: 369px;
+  height: 55px;
+  left: 730px;
+  top: 340px;
+
+  background: #4b7bff;
+  border-radius: 12px;
+}
