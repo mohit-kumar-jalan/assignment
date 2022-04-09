@@ -1,6 +1,7 @@
 import { Player } from "./player"
 
 export function getPrettyPlayer(player: Player){
+  //console.log("pretty")
   if(player === Player.None)
   return 'noplayer'
   if(player===Player.One)

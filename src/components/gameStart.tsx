@@ -1,14 +1,13 @@
 import "./gameStart.css";
-import Game from "./game";
-import App from "../App";
+
 import { Link } from "react-router-dom";
-import { Player } from "./player";
-import { useContext, useState } from "react";
-import { GetValue } from "./getValue";
+
+import { useState } from "react";
 //import { name } from './playerContext';
 //import PlayerContext from './playerContext';
 
 function StartGame() {
+
   var [firstName, setFirstName] = useState("");
   var [secondName, setSecondName] = useState("");
 
@@ -35,13 +34,17 @@ function StartGame() {
      {/* {console.log(firstName, secondName)}  */}
       {/* <Link to={{pathname: "/game", state: }} ><input type="button" value="Start Game" className='startButton'></input></Link> */}
       
-      <Link
+      {/* <Link
         to={`/game`}
-        state={{
-          firstName,secondName
-        }}
+        state=
+          //firstName,secondName
+          "abcd"
         
-      ><input type="button" value="Start Game" className='startButton'></input></Link>
+        
+      > */}
+        {/* <input type="button" value="Start Game" className='startButton' onClick={() => }></input> */}
+        <Link
+        to={"/game"} state={{fname: firstName,sname: secondName }}><button className="startButton">Start Game</button></Link>
       
     </div>
   );

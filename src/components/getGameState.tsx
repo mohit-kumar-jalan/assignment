@@ -11,6 +11,7 @@ export function getGameState(board: Board){
         const boardSlice=board.slice(index,index+4)
         //console.log(boardSlice)
         const winningResult= checkWinningSlice(boardSlice)
+        //console.log(winningResult)
         if(winningResult!==false) return winningResult
       }
       }

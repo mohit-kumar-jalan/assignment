@@ -5,5 +5,4 @@ export enum GameState{
   Draw=0,
   PlayerOneWin=Player.One,
   PlayerTwoWin = Player.Two,
-  GameEnd=1
 }

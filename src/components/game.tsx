@@ -14,7 +14,11 @@ import App from "../App";
 import { render } from "@testing-library/react";
 //import PlayerContext from "./components/playerContext";
 
-function Game(props: any) {
+function Game() {
+  const location=useLocation()
+  const name: any=location.state
+  const firstName = name.fname
+  const secondName = name.sname
   //Player01=useContext(PlayerContext)
   //Player02=useContext(PlayerContext)
 
@@ -24,7 +28,7 @@ function Game(props: any) {
        this.state={
          fname: props
        };*/
-       console.log("run")
+       //console.log("run")
   const [firstPlayerScore, setFirstPlayerScore] = useState(0);
   const [secondPlayerScore, setSecondPlayerScore] = useState(0);
 
@@ -34,36 +38,15 @@ function Game(props: any) {
     gameState: GameState.Ongoing,
     //firstName : StartGame.firstName
   };
-
+  //console.log(state)
   function renderCells() {
     const { board } = state;
+    //console.log(board)
     //console.log(this.Player01,this.Player02)
     return board.map((player, index) => renderCell(player, index));
   }
-
-  function handleOnClick(index: number) {
-    const { gameState } = state;
-    if (gameState !== GameState.Ongoing) {
-      return;
-    }
-    const column = index % 7;
-    makeMove(column);
-  }
-  function makeMove(column: number) {
-    const { board, playerTurn } = state;
-    const index = findLowestEmptyIndex(board, column);
-    const newBoard = board.slice();
-    newBoard[index] = playerTurn;
-
-    const gameState = getGameState(newBoard);
-    state = {
-      board: newBoard,
-      playerTurn: togglePlayerTurn(playerTurn),
-      gameState: GameState.Ongoing,
-    };
-  }
-
   function renderCell(player: Player, index: number) {
+    //console.log(index)
     return (
       <div
         className="cell"
@@ -74,7 +57,41 @@ function Game(props: any) {
     );
   }
 
+  function handleOnClick(index: number) {
+    //console.log("handle")
+    const { gameState } = state;
+    //console.log(gameState)
+    if (gameState !== GameState.Ongoing) {
+      return;
+    }
+    //console.log(gameState)
+    const column = index % 7;
+    makeMove(column);
+  }
+  function makeMove(column: number) {
+    //console.log("move",column)
+    const { board, playerTurn } = state;
+    //console.log(playerTurn)
+    const index = findLowestEmptyIndex(board, column);
+    //console.log(index)
+    const newBoard = board.slice();
+    //console.log(newBoard)
+    newBoard[index] = playerTurn;
+
+    const gamestate = getGameState(newBoard);
+    //console.log(gameState )
+    state = {
+      board: newBoard,
+      playerTurn: togglePlayerTurn(playerTurn),
+      gameState: GameState.Ongoing,
+    };
+    //console.log(state)
+  }
+
+  
+
   function restartGame() {
+    //console.log("res")
     const board = [];
     for (let i = 0; i < 42; i++) {
       board.push(Player.None);
@@ -83,10 +100,12 @@ function Game(props: any) {
   }
 
   function renderGameStatus() {
+    //console.log("game")
     /*let player1=PlayerContext
      let player2=PlayerContext
      console.log(player1,player2)*/
     const { gameState } = state;
+    //console.log(gameState)
     let text;
     let text1;
     if (gameState === GameState.Draw) {
@@ -95,9 +114,11 @@ function Game(props: any) {
       setFirstPlayerScore(firstPlayerScore + 1);
       text = "Congratulation";
       text1 = "Player One";
+      console.log(text)
     } else if (gameState === GameState.PlayerTwoWin) {
       setSecondPlayerScore(secondPlayerScore + 1);
       text = "Congratulation";
+      console.log(text)
       text1 = "Player Two";
     }
     //console.log(this.firstPlayerScore,this.secondPlayerScore)
@@ -118,11 +139,13 @@ function Game(props: any) {
         text = "Player One won";
         setFirstPlayerScore(0);
         setSecondPlayerScore(0);
+        state.gameState=GameState.PlayerOneWin
       } else if (firstPlayerScore < secondPlayerScore) {
         text = "Player two won";
 
         setFirstPlayerScore(0);
         setSecondPlayerScore(0);
+        state.gameState = GameState.PlayerTwoWin
       }
     }
     return (
@@ -133,7 +156,8 @@ function Game(props: any) {
           <div className="rect1_2">
             <img src="./components/1.png" alt="" />
             <div>
-              <p>Player01</p>
+              <p>Player01</p><br />
+              <p className="firstName">{firstName}</p>
             </div>
             <div className="score1">Score</div>
             <h5>{firstPlayerScore}</h5>
@@ -142,6 +166,7 @@ function Game(props: any) {
             <img src="./components/2.png" alt="" />
             <div>
               <p>Player02</p>
+              <p className="secondName">{secondName}</p>
             </div>
             <div className="score2">Score</div>
             <h5>{secondPlayerScore}</h5>
@@ -164,10 +189,11 @@ function Game(props: any) {
 
   return (
     <div className="App">
-      <div>{renderGameStatus}</div>
-      <div className="board">{renderCells}</div>
+      {/* <p>Text</p> */}
+       <div>{renderGameStatus()}</div>
+       <div className="board">{renderCells()}</div> 
       {/* {console.log()}  */}
-      {console.log(props)}
+      {/* {console.log("str ",props.location.state)}  */}
     </div>
   );
 }
