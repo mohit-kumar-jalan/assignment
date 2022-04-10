@@ -1,4 +1,3 @@
-import React, { useContext } from "react";
 import { initializeBoard } from "./boardInitialize";
 import { findLowestEmptyIndex } from "./findIndex";
 import { GameState } from "./gameState";
@@ -9,26 +8,15 @@ import { togglePlayerTurn } from "./playerTurn";
 import "./App.css";
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import StartGame from "./gameStart";
-import App from "../App";
-import { render } from "@testing-library/react";
+
 //import PlayerContext from "./components/playerContext";
 
 function Game() {
-  const location=useLocation()
-  const name: any=location.state
-  const firstName = name.fname
-  const secondName = name.sname
-  //Player01=useContext(PlayerContext)
-  //Player02=useContext(PlayerContext)
-
-  /*constructor(props){
-       super(props)
-       console.log(props)
-       this.state={
-         fname: props
-       };*/
-       //console.log("run")
+  const location = useLocation();
+  const name: any = location.state;
+  const firstName = name.fname;
+  const secondName = name.sname;
+  
   const [firstPlayerScore, setFirstPlayerScore] = useState(0);
   const [secondPlayerScore, setSecondPlayerScore] = useState(0);
 
@@ -36,62 +24,59 @@ function Game() {
     board: initializeBoard(),
     playerTurn: Player.One,
     gameState: GameState.Ongoing,
-    //firstName : StartGame.firstName
   };
-  //console.log(state)
   function renderCells() {
-    const { board } = state;
-    //console.log(board)
-    //console.log(this.Player01,this.Player02)
+    const board = state.board;
+    
     return board.map((player, index) => renderCell(player, index));
   }
   function renderCell(player: Player, index: number) {
-    //console.log(index)
     return (
       <div
         className="cell"
         key={index}
-        onClick={() => handleOnClick(index)}
         data-player={getPrettyPlayer(player)}
+        onClick={() => handleOnClick(index)}
+        
       ></div>
     );
   }
 
   function handleOnClick(index: number) {
-    //console.log("handle")
-    const { gameState } = state;
-    //console.log(gameState)
+    const gameState = state.gameState;
     if (gameState !== GameState.Ongoing) {
       return;
     }
-    //console.log(gameState)
     const column = index % 7;
     makeMove(column);
   }
-  function makeMove(column: number) {
-    //console.log("move",column)
-    const { board, playerTurn } = state;
-    //console.log(playerTurn)
+  const makeMove = (column: number) => {
+    const board = state.board;
+    const playerTurn = state.playerTurn;
     const index = findLowestEmptyIndex(board, column);
-    //console.log(index)
     const newBoard = board.slice();
-    //console.log(newBoard)
     newBoard[index] = playerTurn;
 
     const gamestate = getGameState(newBoard);
-    //console.log(gameState )
-    state = {
-      board: newBoard,
-      playerTurn: togglePlayerTurn(playerTurn),
-      gameState: GameState.Ongoing,
-    };
-    //console.log(state)
-  }
+    console.log(gamestate);
 
-  
+    
+    state.board = newBoard;
+    state.playerTurn = togglePlayerTurn(playerTurn);
+    if (gamestate === 1) {
+      
+      state.gameState = GameState.PlayerOneWin;
+    } else if (gamestate === 2) {
+      state.gameState = GameState.PlayerTwoWin;
+    } else if (gamestate === 0) {
+      state.gameState = GameState.Draw;
+    } else if (gamestate === -1) {
+      state.gameState = GameState.Ongoing;
+    }
+    renderGameStatus()
+  };
 
   function restartGame() {
-    //console.log("res")
     const board = [];
     for (let i = 0; i < 42; i++) {
       board.push(Player.None);
@@ -100,25 +85,26 @@ function Game() {
   }
 
   function renderGameStatus() {
-    //console.log("game")
     /*let player1=PlayerContext
      let player2=PlayerContext
      console.log(player1,player2)*/
-    const { gameState } = state;
-    //console.log(gameState)
+    const gameState = state.gameState;
+    //console.log(gameState);
     let text;
     let text1;
     if (gameState === GameState.Draw) {
       text = "Game is draw";
+      //console.log(text);
     } else if (gameState === GameState.PlayerOneWin) {
       setFirstPlayerScore(firstPlayerScore + 1);
       text = "Congratulation";
       text1 = "Player One";
-      console.log(text)
+      //console.log(text);
+      //console.log(text1);
     } else if (gameState === GameState.PlayerTwoWin) {
       setSecondPlayerScore(secondPlayerScore + 1);
       text = "Congratulation";
-      console.log(text)
+      //console.log(text);
       text1 = "Player Two";
     }
     //console.log(this.firstPlayerScore,this.secondPlayerScore)
@@ -139,31 +125,32 @@ function Game() {
         text = "Player One won";
         setFirstPlayerScore(0);
         setSecondPlayerScore(0);
-        state.gameState=GameState.PlayerOneWin
+        state.gameState = GameState.PlayerOneWin;
       } else if (firstPlayerScore < secondPlayerScore) {
         text = "Player two won";
 
         setFirstPlayerScore(0);
         setSecondPlayerScore(0);
-        state.gameState = GameState.PlayerTwoWin
+        state.gameState = GameState.PlayerTwoWin;
       }
     }
     return (
       <div className="game">
         <h3>Games Tournament</h3>
-        <h2>{text}</h2>
+        {console.log("win",text1)}
+        <h2>{text1}</h2>
         <div className="box1">
           <div className="rect1_2">
-            <img src="./components/1.png" alt="" />
+            <img src="./1.png" alt="" />
             <div>
-              <p>Player01</p><br />
+              <p>Player01</p>
               <p className="firstName">{firstName}</p>
             </div>
             <div className="score1">Score</div>
             <h5>{firstPlayerScore}</h5>
           </div>
           <div className="rect2_1">
-            <img src="./components/2.png" alt="" />
+            <img src="./2.png" alt="" />
             <div>
               <p>Player02</p>
               <p className="secondName">{secondName}</p>
@@ -190,8 +177,8 @@ function Game() {
   return (
     <div className="App">
       {/* <p>Text</p> */}
-       <div>{renderGameStatus()}</div>
-       <div className="board">{renderCells()}</div> 
+      <div>{renderGameStatus()}</div>
+      <div className="board">{renderCells()}</div>
       {/* {console.log()}  */}
       {/* {console.log("str ",props.location.state)}  */}
     </div>

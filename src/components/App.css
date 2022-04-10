@@ -43,11 +43,11 @@
 }
 
 .board > .cell[data-player="playerOne"] {
-  background-image: "./1.png";
+  background-image: url("./1.png");
 }
 
 .board > .cell[data-player="playertwo"] {
-  background-image: "./2.png";
+  background-image: url("./2.png")
 }
 
 .box1{
