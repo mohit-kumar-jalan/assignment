@@ -8,27 +8,31 @@ import { togglePlayerTurn } from "./playerTurn";
 import "./App.css";
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-
-//import PlayerContext from "./components/playerContext";
+import photo from "./1.png";
+import photo1 from "./2.png";
 
 function Game() {
   const location = useLocation();
   const name: any = location.state;
   const firstName = name.fname;
   const secondName = name.sname;
-  
+  const totalGame = name.totalgame;
+  const i = parseInt(totalGame);
+  //console.log(typeof totalGame)
+  const [style1, setStyle1] = useState("");
+  const [style2, setStyle2] = useState("");
+  const [seq, setSeq] = useState(1);
   const [firstPlayerScore, setFirstPlayerScore] = useState(0);
   const [secondPlayerScore, setSecondPlayerScore] = useState(0);
-
-  let state = {
+  const [playerWon, setPlayerWon] = useState("");
+  const [newGameState, setNewGameState] = useState({
     board: initializeBoard(),
     playerTurn: Player.One,
     gameState: GameState.Ongoing,
-  };
+  });
+
   function renderCells() {
-    const board = state.board;
-    
-    return board.map((player, index) => renderCell(player, index));
+    return newGameState.board.map((player, index) => renderCell(player, index));
   }
   function renderCell(player: Player, index: number) {
     return (
@@ -36,14 +40,15 @@ function Game() {
         className="cell"
         key={index}
         data-player={getPrettyPlayer(player)}
-        onClick={() => handleOnClick(index)}
-        
+        onClick={() => {
+          handleOnClick(index);
+        }}
       ></div>
     );
   }
 
   function handleOnClick(index: number) {
-    const gameState = state.gameState;
+    const gameState = newGameState.gameState;
     if (gameState !== GameState.Ongoing) {
       return;
     }
@@ -51,29 +56,34 @@ function Game() {
     makeMove(column);
   }
   const makeMove = (column: number) => {
-    const board = state.board;
-    const playerTurn = state.playerTurn;
-    const index = findLowestEmptyIndex(board, column);
+    const board = newGameState.board;
+    const playerTurn = newGameState.playerTurn;
+    const index = findLowestEmptyIndex(newGameState.board, column);
     const newBoard = board.slice();
     newBoard[index] = playerTurn;
-
+    setNewGameState({ ...newGameState, board: newBoard });
     const gamestate = getGameState(newBoard);
-    console.log(gamestate);
+    newGameState.board = newBoard;
+    newGameState.playerTurn = togglePlayerTurn(playerTurn);
+    //console.log(newGameState.playerTurn)
+    if (newGameState.playerTurn === 1) {
+      setStyle1("5px solid orange");
 
-    
-    state.board = newBoard;
-    state.playerTurn = togglePlayerTurn(playerTurn);
-    if (gamestate === 1) {
-      
-      state.gameState = GameState.PlayerOneWin;
-    } else if (gamestate === 2) {
-      state.gameState = GameState.PlayerTwoWin;
-    } else if (gamestate === 0) {
-      state.gameState = GameState.Draw;
-    } else if (gamestate === -1) {
-      state.gameState = GameState.Ongoing;
+      setStyle2("none");
+    } else if (newGameState.playerTurn === 2) {
+      setStyle1("none");
+
+      setStyle2("5px solid orange");
     }
-    renderGameStatus()
+    if (gamestate === 1) {
+      setNewGameState({ ...newGameState, gameState: GameState.PlayerOneWin });
+    } else if (gamestate === 2) {
+      setNewGameState({ ...newGameState, gameState: GameState.PlayerTwoWin });
+    } else if (gamestate === 0) {
+      setNewGameState({ ...newGameState, gameState: GameState.Draw });
+    } else if (gamestate === -1) {
+      setNewGameState({ ...newGameState, gameState: GameState.Ongoing });
+    }
   };
 
   function restartGame() {
@@ -85,63 +95,75 @@ function Game() {
   }
 
   function renderGameStatus() {
-    /*let player1=PlayerContext
-     let player2=PlayerContext
-     console.log(player1,player2)*/
-    const gameState = state.gameState;
-    //console.log(gameState);
-    let text;
+    const gameState = newGameState.gameState;
     let text1;
     if (gameState === GameState.Draw) {
-      text = "Game is draw";
-      //console.log(text);
-    } else if (gameState === GameState.PlayerOneWin) {
+      setPlayerWon("Game Draw ");
+    } else if (
+      gameState === GameState.PlayerOneWin &&
+      seq <= parseInt(totalGame)
+    ) {
       setFirstPlayerScore(firstPlayerScore + 1);
-      text = "Congratulation";
       text1 = "Player One";
-      //console.log(text);
-      //console.log(text1);
-    } else if (gameState === GameState.PlayerTwoWin) {
+      setPlayerWon(firstName + " won the round " + seq);
+      setSeq(seq + 1);
+      //console.log(seq,typeof seq)
+    } else if (
+      gameState === GameState.PlayerTwoWin &&
+      seq <= parseInt(totalGame)
+    ) {
       setSecondPlayerScore(secondPlayerScore + 1);
-      text = "Congratulation";
       //console.log(text);
       text1 = "Player Two";
+      setPlayerWon(secondName + " won the round " + seq);
+      setSeq(seq + 1);
     }
-    //console.log(this.firstPlayerScore,this.secondPlayerScore)
-    //if(this.firstPlayerScore+this.secondPlayerScore !== 3){
+
     if (text1 === "Player One") {
-      state.board = restartGame();
-      state.playerTurn = Player.One;
-      state.gameState = GameState.Ongoing;
+      //seq+=1
+      setNewGameState({
+        board: restartGame(),
+        playerTurn: Player.One,
+        gameState: GameState.Ongoing,
+      });
     }
     if (text1 === "Player Two") {
-      state.board = restartGame();
-      state.playerTurn = Player.Two;
-      state.gameState = GameState.Ongoing;
-    }
-    //}
-    if (firstPlayerScore + secondPlayerScore === 3) {
-      if (firstPlayerScore > secondPlayerScore) {
-        text = "Player One won";
-        setFirstPlayerScore(0);
-        setSecondPlayerScore(0);
-        state.gameState = GameState.PlayerOneWin;
-      } else if (firstPlayerScore < secondPlayerScore) {
-        text = "Player two won";
+      setNewGameState({
+        board: restartGame(),
+        playerTurn: Player.Two,
+        gameState: GameState.Ongoing,
+      });
+      
 
+    }
+
+    if (firstPlayerScore + secondPlayerScore === parseInt(totalGame)) {
+      if (firstPlayerScore > secondPlayerScore) {
+        setPlayerWon(firstName + " won the game");
         setFirstPlayerScore(0);
         setSecondPlayerScore(0);
-        state.gameState = GameState.PlayerTwoWin;
+      } else if (firstPlayerScore < secondPlayerScore) {
+        setPlayerWon(secondName + " won the game");
+        setFirstPlayerScore(0);
+        setSecondPlayerScore(0);
+      } else if (firstPlayerScore === secondPlayerScore) {
+        setPlayerWon("Game Draw");
+        setFirstPlayerScore(0);
+        setSecondPlayerScore(0);
       }
     }
+    //console.log(togglePlayerTurn)
     return (
       <div className="game">
         <h3>Games Tournament</h3>
-        {console.log("win",text1)}
-        <h2>{text1}</h2>
+        <h2>{playerWon}</h2>
         <div className="box1">
           <div className="rect1_2">
-            <img src="./1.png" alt="" />
+            <img
+              src={photo}
+              alt=""
+              style={{ border: "" + style1, borderRadius: "40px" }}
+            />
             <div>
               <p>Player01</p>
               <p className="firstName">{firstName}</p>
@@ -150,7 +172,11 @@ function Game() {
             <h5>{firstPlayerScore}</h5>
           </div>
           <div className="rect2_1">
-            <img src="./2.png" alt="" />
+            <img
+              src={photo1}
+              alt=""
+              style={{ border: "" + style2, borderRadius: "40px" }}
+            />
             <div>
               <p>Player02</p>
               <p className="secondName">{secondName}</p>
@@ -170,17 +196,11 @@ function Game() {
       </div>
     );
   }
-  /*{constructor(props){
-
-  }}*/
 
   return (
     <div className="App">
-      {/* <p>Text</p> */}
       <div>{renderGameStatus()}</div>
       <div className="board">{renderCells()}</div>
-      {/* {console.log()}  */}
-      {/* {console.log("str ",props.location.state)}  */}
     </div>
   );
 }

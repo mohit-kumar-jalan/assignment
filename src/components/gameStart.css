@@ -1,7 +1,7 @@
 .box {
   position: absolute;
   width: 600px;
-  height: 344px;
+  height: 450px;
   left: 420px;
   top: 184px;
   background: #ffffff;
@@ -42,7 +42,7 @@
   width: 538px;
   height: 55px;
   left: 30px;
-  top: 270px;
+  top: 350px;
 
   background: #4b7bff;
   border-radius: 12px;
@@ -136,3 +136,15 @@ color: #869189;
 
 }
 
+.total-game{
+  position: absolute;
+  width: 538px;
+  height: 82px;
+  left: 30px;
+  top: 260px;
+  background: #dcf6e4;
+  border: 1px solid #cce2d3;
+  box-sizing: border-box;
+  border-radius: 10px;
+
+}
