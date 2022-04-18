@@ -11,35 +11,70 @@
   box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.16);
   border-radius: 30px;
 }
+body{
+  width: 100vw;
+    height: 100vh;
+    background-color: #CED2DC;
+}
 .game > h3{
   right: 0;
-  margin-left: 800px;
-  margin-top: 100px;
+  padding-left: 810px;
+    padding-top: 50px;
+  font-family: 'Poppins';
+font-style: normal;
+font-weight: 500;
+font-size: 24px;
+line-height: 36px;
+height: 0px;
 }
+.game > h4{
+  /* right: 0; */
+  padding-left: 847px;
+  /* height: 10px; */
+    padding-top: 11px;
+  font-family: 'Poppins';
+font-style: normal;
+font-weight: 400;
+font-size: 18px;
+line-height: 27px;
+/* identical to box height */
 
+
+color: #424242;
+}
 .game > h2{
-  margin-left: 780px;
+  margin-left: 802px;
   color:  #FF6600;
+  /* position: absolute; */
+  height: 10px;
+    padding-top: 13px;
+
 }
 
 .board {
-  position:absolute ;
-  
-  background: #84A4FB;
-  width: 550px;
-  margin-left: 80px;
-  margin-top: -120px;
-  padding: 8px;
+  position: absolute;
+    background: #84A4FB;
+    width: 550px;
+    left: -1px;
+    top: -1px;
+    bottom: -1px;
+    /* margin-left: 80px; */
+    /* margin-top: -120px; */
+    padding: 44px;
+    padding-top: 33px;
+    border-radius: 30px 30px 30px 30px;
 }
 
 .board > .cell {
-  width: calc(550px / 7 - 8px);
-  height: calc(550px / 7 - 8px);
+  width: calc(550px / 8 - 8px);
+  height: calc(550px / 8 - 8px);
   background: white;
   display: inline-block;
   box-sizing: border-box;
   border-radius: 50%;
   margin: 4px;
+  margin-top: 0px;
+  margin-bottom: 1px;
 }
 
 .board > .cell[data-player="playerOne"] {
@@ -54,6 +89,7 @@
   position: absolute;
   width: 100px;
   margin-left: 800px;
+  top: 200px;
 }
 
 .rect1_2{
@@ -152,6 +188,7 @@ top: 5px;
 box-sizing: border-box;
 }
 
+
 .rect2_1 > img{
   position: absolute;
 width: 70px;
@@ -162,15 +199,33 @@ top: 5px;
 box-sizing: border-box;
 }
 
+.start{
+  /* padding-left: 700px;
+    padding-top: 400px; */
+    position: absolute;
+    width: 369px;
+  height: 55px;
+  border: 1px;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+  background: #4B7BFF;
+  color: white;
+  border-radius: 12px;
+  
+  left: 729px;
+  top: 398px;
+
+}
+
 .startButton1{
   position: absolute;
   width: 369px;
   height: 55px;
   left: 730px;
-  top: 400px;
-
+  top: 460px;
+  border: 1px;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
   background: white;
-  color: red;
+  color: #CC0000;
   border-radius: 12px;
 }
 

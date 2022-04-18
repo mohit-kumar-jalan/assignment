@@ -19,14 +19,14 @@ function StartGame() {
   return (
     <div className="box">
       <div className="rect1">
-        <img src={photo} alt="" />
+        <img src={photo1} alt="" />
         <div>
           <p>Player01</p>
           <input type="text" className="text1" onChange={(e) => setFirstName(e.target.value)} />
         </div>
       </div>
       <div className="rect2">
-        <img src={photo1} alt="" />
+        <img src={photo} alt="" />
         <div>
           <p>Player02</p>
           <input type="text" onChange={(e) => setSecondName(e.target.value)} />
@@ -35,7 +35,8 @@ function StartGame() {
       <div className="total-game">
         <p>Number of Games to be played</p>
         <input type="text" onChange={(e) => setNoOfGame(e.target.value)}/>
-      </div><br />
+      </div>
+      <hr />
      {/* {console.log(firstName, secondName)}  */}
       {/* <Link to={{pathname: "/game", state: }} ><input type="button" value="Start Game" className='startButton'></input></Link> */}
       

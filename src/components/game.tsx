@@ -19,8 +19,8 @@ function Game() {
   const totalGame = name.totalgame;
   const i = parseInt(totalGame);
   //console.log(typeof totalGame)
-  const [style1, setStyle1] = useState("");
-  const [style2, setStyle2] = useState("");
+  let style1 = "";
+  let style2 = "";
   const [seq, setSeq] = useState(1);
   const [firstPlayerScore, setFirstPlayerScore] = useState(0);
   const [secondPlayerScore, setSecondPlayerScore] = useState(0);
@@ -52,7 +52,7 @@ function Game() {
     if (gameState !== GameState.Ongoing) {
       return;
     }
-    const column = index % 7;
+    const column = index % 8;
     makeMove(column);
   }
   const makeMove = (column: number) => {
@@ -67,14 +67,16 @@ function Game() {
     newGameState.playerTurn = togglePlayerTurn(playerTurn);
     //console.log(newGameState.playerTurn)
     if (newGameState.playerTurn === 1) {
-      setStyle1("5px solid orange");
+      style1 ="5px solid orange";
 
-      setStyle2("none");
+      style2 ="none";
+      // console.log(style1,style2)
     } else if (newGameState.playerTurn === 2) {
-      setStyle1("none");
+      style2 ="5px solid orange";
 
-      setStyle2("5px solid orange");
+      style1 ="none";
     }
+    console.log(style1,style2)
     if (gamestate === 1) {
       setNewGameState({ ...newGameState, gameState: GameState.PlayerOneWin });
     } else if (gamestate === 2) {
@@ -85,10 +87,11 @@ function Game() {
       setNewGameState({ ...newGameState, gameState: GameState.Ongoing });
     }
   };
+  // console.log(style1,style2)
 
   function restartGame() {
     const board = [];
-    for (let i = 0; i < 42; i++) {
+    for (let i = 0; i < 64; i++) {
       board.push(Player.None);
     }
     return board;
@@ -133,8 +136,6 @@ function Game() {
         playerTurn: Player.Two,
         gameState: GameState.Ongoing,
       });
-      
-
     }
 
     if (firstPlayerScore + secondPlayerScore === parseInt(totalGame)) {
@@ -155,15 +156,17 @@ function Game() {
     //console.log(togglePlayerTurn)
     return (
       <div className="game">
-        <h3>Games Tournament</h3>
+        <h3>{totalGame} Games Tournament</h3>
         <h2>{playerWon}</h2>
+        <h4>Playing game {seq}</h4>
         <div className="box1">
           <div className="rect1_2">
             <img
               src={photo}
               alt=""
-              style={{ border: "" + style1, borderRadius: "40px" }}
+              style={{border: (""+style1), borderRadius: "40px"}}
             />
+            {console.log(style1)}
             <div>
               <p>Player01</p>
               <p className="firstName">{firstName}</p>
@@ -172,10 +175,11 @@ function Game() {
             <h5>{firstPlayerScore}</h5>
           </div>
           <div className="rect2_1">
+            {/* {console.log(style1,style2)} */}
             <img
               src={photo1}
               alt=""
-              style={{ border: "" + style2, borderRadius: "40px" }}
+              style={{border: (""+style2), borderRadius: "40px"}}
             />
             <div>
               <p>Player02</p>
@@ -189,7 +193,7 @@ function Game() {
         <Link to="/">
           <input
             type="button"
-            value="End Game"
+            value="End Tournament"
             className="startButton1"
           ></input>
         </Link>
@@ -199,6 +203,9 @@ function Game() {
 
   return (
     <div className="App">
+      <div>
+        <input type="button" value="Start Game" className="start" />
+      </div>
       <div>{renderGameStatus()}</div>
       <div className="board">{renderCells()}</div>
     </div>

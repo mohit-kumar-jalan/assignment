@@ -2,8 +2,8 @@
   position: absolute;
   width: 600px;
   height: 450px;
-  left: 420px;
-  top: 184px;
+  left: 370px;
+  top: 115px;
   background: #ffffff;
   border: 1px solid #f7f7f7;
   box-sizing: border-box;
@@ -29,7 +29,7 @@
   width: 538px;
   height: 82px;
   left: 30px;
-  top: 170px;
+  top: 150px;
 
   background: #f7efd5;
   border: 1px solid #e2dcc7;
@@ -42,10 +42,17 @@
   width: 538px;
   height: 55px;
   left: 30px;
-  top: 350px;
+  top: 361px;
 
   background: #4b7bff;
   border-radius: 12px;
+}
+
+hr{
+  margin-top: 260px;
+    width: 554px;
+    height: px;
+    background: #949494;
 }
 
 button{
@@ -61,7 +68,7 @@ font-style: normal;
 font-weight: 400;
 font-size: 16px;
 line-height: 24px;
-
+border: none;
 color: #FFFFFF;
 }
 
@@ -107,7 +114,10 @@ color: #869189;
     position: absolute;
     margin-top: 50px;
     margin-left: 110px;
-    
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #949494;
+    width: 400.5px;
 }
 
 .rect2 > div > p{
@@ -133,6 +143,10 @@ color: #869189;
     margin-top: 50px;
     margin-left: 110px;
     position: absolute;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #949494;
+    width: 400.5px;
 
 }
 
@@ -141,7 +155,7 @@ color: #869189;
   width: 538px;
   height: 82px;
   left: 30px;
-  top: 260px;
+  top: 250px;
   background: #dcf6e4;
   border: 1px solid #cce2d3;
   box-sizing: border-box;
