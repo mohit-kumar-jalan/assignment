@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css?family=Poppins");
 .App  {
   position: absolute;
   width: 1200px;
@@ -18,7 +19,7 @@ body{
 }
 .game > h3{
   right: 0;
-  padding-left: 810px;
+  padding-left: 793px;
     padding-top: 50px;
   font-family: 'Poppins';
 font-style: normal;
@@ -157,9 +158,9 @@ top: 30px;
 
 font-family: 'Poppins';
 font-style: normal;
-font-weight: 400;
+font-weight:400;
 font-size: 16px;
-color: #869189;
+color: #000000;
 line-height: 24px;
 }
 
@@ -174,7 +175,7 @@ font-family: 'Poppins';
 font-style: normal;
 font-weight: 400;
 font-size: 16px;
-color: #869189;
+color: #000000;
 line-height: 24px;
 }
 
