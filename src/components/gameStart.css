@@ -48,109 +48,106 @@
   border-radius: 12px;
 }
 
-hr{
+hr {
   margin-top: 260px;
-    width: 554px;
-    height: px;
-    background: #949494;
+  width: 554px;
+  height: px;
+  background: #949494;
 }
 
-button{
-    cursor: pointer;
-    position: absolute;
-width: 92px;
-height: 24px;
-left: 674px;
-top: 456px;
+button {
+  cursor: pointer;
+  position: absolute;
+  width: 92px;
+  height: 24px;
+  left: 674px;
+  top: 456px;
 
-font-family: 'Poppins';
-font-style: normal;
-font-weight: 400;
-font-size: 16px;
-line-height: 24px;
-border: none;
-color: #FFFFFF;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  border: none;
+  color: #ffffff;
 }
 
-.rect1 > img{
-    position: absolute;
-width: 70px;
-height: 70px;
-left: 25px;
-top: 5px;
+.rect1 > img {
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  left: 25px;
+  top: 5px;
 
-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
-.rect2 > img{
-    position: absolute;
-width: 70px;
-height: 70px;
-left: 25px;
-top: 5px;
+.rect2 > img {
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  left: 25px;
+  top: 5px;
 
-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
-.rect1 > div > p{
-    position: absolute;
-width: 69px;
-height: 24px;
-left: 110px;
-top: 5px;
+.rect1 > div > p {
+  position: absolute;
+  width: 69px;
+  height: 24px;
+  left: 110px;
+  top: 5px;
 
-font-family: 'Poppins';
-font-style: normal;
-font-weight: 400;
-font-size: 16px;
-line-height: 24px;
-/* identical to box height */
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  /* identical to box height */
 
-
-color: #869189;
+  color: #869189;
 }
 
-.rect1 > div > input{
-    position: absolute;
-    margin-top: 50px;
-    margin-left: 110px;
-    background: transparent;
-    border: none;
-    border-bottom: 1px solid #949494;
-    width: 400.5px;
+.rect1 > div > input {
+  position: absolute;
+  margin-top: 50px;
+  margin-left: 110px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #949494;
+  width: 400.5px;
 }
 
-.rect2 > div > p{
-    position: absolute;
-width: 69px;
-height: 24px;
-left: 110px;
-top: 5px;
+.rect2 > div > p {
+  position: absolute;
+  width: 69px;
+  height: 24px;
+  left: 110px;
+  top: 5px;
 
-font-family: 'Poppins';
-font-style: normal;
-font-weight: 400;
-font-size: 16px;
-line-height: 24px;
-/* identical to box height */
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  /* identical to box height */
 
-
-color: #869189;
+  color: #869189;
 }
 
-.rect2 > div > input{
-    position: absolute;
-    margin-top: 50px;
-    margin-left: 110px;
-    position: absolute;
-    background: transparent;
-    border: none;
-    border-bottom: 1px solid #949494;
-    width: 400.5px;
-
+.rect2 > div > input {
+  position: absolute;
+  margin-top: 50px;
+  margin-left: 110px;
+  position: absolute;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #949494;
+  width: 400.5px;
 }
 
-.total-game{
+.total-game {
   position: absolute;
   width: 538px;
   height: 82px;
@@ -160,5 +157,4 @@ color: #869189;
   border: 1px solid #cce2d3;
   box-sizing: border-box;
   border-radius: 10px;
-
 }

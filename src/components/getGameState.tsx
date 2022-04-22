@@ -1,7 +1,3 @@
-import { Board } from "./boardInitialize";
-import { GameState } from "./gameState";
-import { Player } from "./player";
-import { checkWinningSlice } from "./checkWinning";
 let winner: number;
 export function getGameState(
   freeCell: number,
@@ -17,14 +13,8 @@ export function getGameState(
     return winner;
   } else if (checkDiagonal(board, freeCell, column, playerTurn)) {
     return winner;
-  }
-  // if(checkVertical(column,board, playerTurn,freeCell) || checkHorizontal(freeCell,board, playerTurn, column) || checkDiagonal(board,freeCell,column,playerTurn)){
-  //   return winner
-  // }
-  else return -1;
-  // return checkVertical(column,board, playerTurn,freeCell) || checkHorizontal(freeCell,board, playerTurn, column) || checkDiagonal(board,freeCell,column,playerTurn)
+  } else return -1;
 }
-//freeCell - row
 function checkVertical(
   column: number,
   board: any[][],
@@ -32,13 +22,10 @@ function checkVertical(
   row: number
 ) {
   let player;
-  // console.log(playerTurn)
 
   if (playerTurn === 1) player = 1;
   else player = 2;
-  // console.log(row,column)
-  // if(row <= 4){
-  // for(let i= 7;i>3;i--){
+
   if (
     board[row][column] === player &&
     board[row + 1][column] === player &&
@@ -67,12 +54,10 @@ function checkHorizontal(
   playerTurn: number,
   column: number
 ) {
-  // console.log(playerTurn)
   let player;
   if (playerTurn === 1) player = 1;
   else player = 2;
   for (let j = 0; j < 5; j++) {
-    // for(let i=0;i<8;i++){
     if (
       board[row][j] === player &&
       board[row][j + 1] === player &&
@@ -81,39 +66,11 @@ function checkHorizontal(
     ) {
       winner = player;
       return true;
-      // }
     }
   }
-  // console.log(row,column)
-  // for (let i = 0; i <= 4; i++) {
-  // if(column>=3){
-  // console.log(board[row][column],board[row][column+1],board[row][column+2],board[row][column+3])
-  // if (board[row][column] === player &&
-  //     board[row][column - 1] === player &&
-  //     board[row][column - 2] === player &&
-  //     board[row][column - 3] === player) {
-  //       console.log("this")
-  //       winner=player
-  //         return true;
-  // }
-  // else{
-  // winner=-1
-  //   return false;
-  // }
-  // }
-  // else{
-  //   else if (board[row][column] === player &&
-  //     board[row][column + 1] === player &&
-  //     board[row][column + 2] === player &&
-  //     board[row][column + 3] === player) {
-  //       console.log("true")
-  //       winner=player
-  //         return true;
-  // }
-  // else{
+
   winner = -1;
   return false;
-  // }
 }
 
 function checkDiagonal(
@@ -125,8 +82,6 @@ function checkDiagonal(
   let player;
   if (playerTurn === 1) player = 1;
   else player = 2;
-  // for(let i=0;i<3;i++){
-  // for(let j=0;j<=4;j++){
   if (
     board[freeCell][column] === player &&
     board[freeCell - 1][column - 1] === player &&
@@ -135,11 +90,7 @@ function checkDiagonal(
   ) {
     winner = player;
     return true;
-  }
-  // }
-  // }
-  // for(let i=7;i>=3;i--){
-  else if (
+  } else if (
     board[freeCell][column] === player &&
     board[freeCell - 1][column + 1] === player &&
     board[freeCell - 2][column + 2] === player &&
@@ -167,6 +118,4 @@ function checkDiagonal(
     winner = -1;
     return false;
   }
-  // }
-  // return false
 }

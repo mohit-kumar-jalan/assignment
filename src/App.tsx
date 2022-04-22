@@ -1,18 +1,16 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import StartGame from "./components/gameStart";
-import Main from "./components/game";
 import Game from "./components/game";
 
-function App(){
+function App() {
   return (
-    
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<StartGame/>}/> 
-        <Route path="/game" element={<Game/>}/>
+        <Route path="/" element={<StartGame />} />
+        <Route path="/game" element={<Game />} />
       </Routes>
     </BrowserRouter>
-  )
+  );
 }
 
 export default App;

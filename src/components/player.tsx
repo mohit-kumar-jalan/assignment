@@ -1,5 +1,5 @@
-export enum Player{
-    None=0,
-    One = 1,
-    Two = 2
+export enum Player {
+  None = 0,
+  One = 1,
+  Two = 2,
 }

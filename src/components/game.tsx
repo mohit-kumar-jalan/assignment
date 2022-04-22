@@ -1,5 +1,3 @@
-import { initializeBoard } from "./boardInitialize";
-import { findLowestEmptyIndex } from "./findIndex";
 import { GameState } from "./gameState";
 import { getGameState } from "./getGameState";
 import { getPrettyPlayer } from "./getPlayer";
@@ -14,11 +12,9 @@ var style1 = "";
 var style2 = "";
 var playerWon = "";
 let roundWinner = "";
-var temp = "";
 var gameNo = 1;
 var buttonStyle = "none";
 var undoButtonStyle = "block";
-var cp="";
 function Game() {
   const location = useLocation();
   const name: any = location.state;
@@ -35,10 +31,6 @@ function Game() {
   const [board, setBoard] = useState(createBoard());
   const [playerTurn, setPlayerTurn] = useState(Player.One);
   const [gameState, setGameState] = useState(GameState.Ongoing);
- 
-    // if(playerTurn===1) cp="playerOne"
-    // else if(playerTurn===2) cp="playertwo"
-    // else cp="noplayer"
 
   function createBoard() {
     let board = Array(8)
@@ -48,7 +40,6 @@ function Game() {
   }
 
   function renderCells() {
-    // console.log("run")
     const cells = [];
     for (let i = 0; i < 8; i++) {
       for (let j = 0; j < 8; j++) {
@@ -58,15 +49,10 @@ function Game() {
     return cells;
   }
   function renderCell(i: number, j: number) {
-    // console.log(i,j)
-    
     return (
-      
       <div
         className="cell"
-        // key={index}
-        
-        data-player={getPrettyPlayer(board[i][j])} // extract from current player
+        data-player={getPrettyPlayer(board[i][j])}
         onClick={() => {
           if (startGame) {
             buttonStyle = "none";
@@ -79,12 +65,6 @@ function Game() {
     );
   }
   function handleOnClick(row: number, column: number) {
-
-    // console.log(board[row][column])
-    // if(board[row][column]===1) cp="playerOne"
-    // else if(board[row][column]===2) cp="playertwo"
-    // else cp="noplayer"
-    
     undoButtonStyle = "block";
     setLastClickedRow(row);
     setLastClickedColumn(column);
@@ -133,11 +113,6 @@ function Game() {
     } else if (winner === -1) {
       setGameState(GameState.Ongoing);
     }
-    // return (
-    //   <div className="player"
-    //   data-player={playerTurn}
-    //   ></div>
-    // )
   };
   function undoClick(row: number, column: number) {
     let tempBoard: any[][] = [];
@@ -165,8 +140,7 @@ function Game() {
       if (gameState === GameState.PlayerOneWin && seq <= parseInt(totalGame)) {
         setFirstPlayerScore(firstPlayerScore + 1);
         roundWinner = "Player One";
-        temp = "Won";
-        playerWon ="Congratulation " + firstName + " you won the round " + seq;
+        playerWon = "Congratulation " + firstName + " you won the round " + seq;
         buttonStyle = "block";
         undoButtonStyle = "none";
         setSeq(seq + 1);
@@ -178,8 +152,8 @@ function Game() {
       ) {
         setSecondPlayerScore(secondPlayerScore + 1);
         roundWinner = "Player Two";
-        temp = "Won";
-        playerWon ="Congratulation " + secondName + " you won the round " + seq;
+        playerWon =
+          "Congratulation " + secondName + " you won the round " + seq;
         buttonStyle = "block";
         undoButtonStyle = "none";
         setSeq(seq + 1);
@@ -189,7 +163,7 @@ function Game() {
     } else {
       if (firstPlayerScore + secondPlayerScore === parseInt(totalGame)) {
         if (firstPlayerScore > secondPlayerScore) {
-          playerWon ="Congratulation " + firstName + " you won the game";
+          playerWon = "Congratulation " + firstName + " you won the game";
           buttonStyle = "none";
           undoButtonStyle = "none";
           setFirstPlayerScore(0);
@@ -223,7 +197,6 @@ function Game() {
     }
     return (
       <div className="game">
-        
         <h3>{totalGame} Games Tournament</h3>
         <h2>{playerWon}</h2>
         <h4>Playing game {gameNo}</h4>
@@ -300,7 +273,7 @@ function Game() {
     <div className="App">
       <div>{renderGameStatus()}</div>
       <div className="board">{renderCells()}</div>
-     </div>
+    </div>
   );
 }
 export default Game;
