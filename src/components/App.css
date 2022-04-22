@@ -7,7 +7,7 @@
   top: 36px;
 
   background: #ffffff;
-  border: 1px solid #f7f7f7;
+  /* border: 1px solid #f7f7f7; */
   box-sizing: border-box;
   box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.16);
   border-radius: 30px;
@@ -44,11 +44,12 @@ line-height: 27px;
 color: #424242;
 }
 .game > h2{
-  margin-left: 802px;
+  margin-left: 680px;
   color:  #FF6600;
   /* position: absolute; */
   height: 10px;
     padding-top: 13px;
+    white-space: nowrap;
 
 }
 
@@ -56,9 +57,9 @@ color: #424242;
   position: absolute;
     background: #84A4FB;
     width: 550px;
-    left: -1px;
-    top: -1px;
-    bottom: -1px;
+    left: 0px;
+    top: 0px;
+    bottom: 0px;
     /* margin-left: 80px; */
     /* margin-top: -120px; */
     padding: 44px;
@@ -85,6 +86,7 @@ color: #424242;
 .board > .cell[data-player="playertwo"] {
   background-image: url("./2.png")
 }
+
 
 .box1{
   position: absolute;

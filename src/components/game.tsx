@@ -14,50 +14,62 @@ var style1 = "";
 var style2 = "";
 var playerWon = "";
 let roundWinner = "";
-var temp="";
+var temp = "";
+var gameNo = 1;
+var buttonStyle = "none";
+var undoButtonStyle = "block";
+var cp="";
 function Game() {
   const location = useLocation();
   const name: any = location.state;
   const firstName = name.fname;
   const secondName = name.sname;
   const totalGame = name.totalgame;
-  // const i = parseInt(totalGame);
-  //console.log(typeof totalGame)
 
   const [seq, setSeq] = useState(1);
   const [firstPlayerScore, setFirstPlayerScore] = useState(0);
   const [secondPlayerScore, setSecondPlayerScore] = useState(0);
-  // const [playerWon, setPlayerWon] = useState("");
-  const [startGame, setStartGame] = useState(false);
-  // console.log(startGame)
-  const [newGameState, setNewGameState] = useState({
-    board: initializeBoard(),
-    playerTurn: Player.One,
-    gameState: GameState.Ongoing,
-  });
+  const [startGame, setStartGame] = useState(true);
+  const [lastClickedRow, setLastClickedRow] = useState(-1);
+  const [lastClickedColumn, setLastClickedColumn] = useState(-1);
+  const [board, setBoard] = useState(createBoard());
+  const [playerTurn, setPlayerTurn] = useState(Player.One);
+  const [gameState, setGameState] = useState(GameState.Ongoing);
+ 
+    // if(playerTurn===1) cp="playerOne"
+    // else if(playerTurn===2) cp="playertwo"
+    // else cp="noplayer"
+
+  function createBoard() {
+    let board = Array(8)
+      .fill(0)
+      .map(() => new Array(8).fill(0));
+    return board;
+  }
 
   function renderCells() {
-    // console.log(newGameState.board)
-    return newGameState.board.map((player, index) => renderCell(player, index));
+    const cells = [];
+    for (let i = 0; i < 8; i++) {
+      for (let j = 0; j < 8; j++) {
+        cells.push(renderCell(i, j, board[i][j]));
+      }
+    }
+    return cells;
   }
-  function renderCell(player: Player, index: number) {
-    // console.log(newGameState.board)
+  function renderCell(i: number, j: number, playerOccupied: number) {
+    // console.log(playerTurn)
+    
     return (
+      
       <div
         className="cell"
-        key={index}
-        data-player={getPrettyPlayer(player)}
+        // key={index}
+        
+        data-player={getPrettyPlayer(playerOccupied)} // extract from current player
         onClick={() => {
-          // {console.log(startGame)}
           if (startGame) {
-            // setNewGameState({
-
-            //   board: initializeBoard(),
-            //   playerTurn:Player.One,
-            //   gameState: GameState.Ongoing
-
-            // })
-            handleOnClick(index);
+            buttonStyle = "none";
+            handleOnClick(i, j);
           } else {
             return null;
           }
@@ -65,170 +77,155 @@ function Game() {
       ></div>
     );
   }
+  function handleOnClick(row: number, column: number) {
 
-  function handleOnClick(index: number) {
-    // setNewGameState({
-
-    //   board: initializeBoard(),
-    //   playerTurn:Player.One,
-    //   gameState: GameState.Ongoing
-
-    // })
-    const gameState = newGameState.gameState;
-    // console.log(newGameState.board)
+    console.log(board[row][column])
+    if(board[row][column]===1) cp="playerOne"
+    else if(board[row][column]===2) cp="playertwo"
+    else cp="noplayer"
+    
+    undoButtonStyle = "block";
+    setLastClickedRow(row);
+    setLastClickedColumn(column);
     if (gameState !== GameState.Ongoing) {
       return;
     }
-    const column = index % 8;
+
     makeMove(column);
   }
+  function availableCell(column: number) {
+    for (let i = 7; i >= 0; i--) {
+      if (board[i][column] === Player.None) {
+        return i;
+      }
+    }
+    return -1;
+  }
+  function updateCell(freeCell: number, column: number) {
+    let tempBoard: any[][] = [];
+    for (let i = 0; i < 8; i++) {
+      tempBoard.push(board[i].slice());
+    }
+    tempBoard[freeCell][column] = playerTurn;
+    return tempBoard;
+  }
   const makeMove = (column: number) => {
-    const board = newGameState.board;
-    // console.log(board)
-    const playerTurn = newGameState.playerTurn;
-    const index = findLowestEmptyIndex(newGameState.board, column);
-    const newBoard = board.slice();
-    newBoard[index] = playerTurn;
-    setNewGameState({ ...newGameState, board: newBoard });
-    const gamestate = getGameState(newBoard);
-    newGameState.board = newBoard;
-    newGameState.playerTurn = togglePlayerTurn(playerTurn);
-    //console.log(newGameState.playerTurn)
-    if (newGameState.playerTurn === 1) {
-      style1 = "5px solid orange";
-
-      style2 = "none";
-    } else if (newGameState.playerTurn === 2) {
+    const freeCell = availableCell(column);
+    const newBoard = updateCell(freeCell, column);
+    setBoard(newBoard);
+    setPlayerTurn(togglePlayerTurn(playerTurn));
+    if (playerTurn === 1) {
       style2 = "5px solid orange";
 
       style1 = "none";
+    } else if (playerTurn === 2) {
+      style1 = "5px solid orange";
+
+      style2 = "none";
     }
-    // console.log(style1,style2)
-    if (gamestate === 1) {
-      setNewGameState({ ...newGameState, gameState: GameState.PlayerOneWin });
-    } else if (gamestate === 2) {
-      setNewGameState({ ...newGameState, gameState: GameState.PlayerTwoWin });
-    } else if (gamestate === 0) {
-      setNewGameState({ ...newGameState, gameState: GameState.Draw });
-    } else if (gamestate === -1) {
-      setNewGameState({ ...newGameState, gameState: GameState.Ongoing });
+    const winner = getGameState(freeCell, column, newBoard, playerTurn);
+
+    if (winner === 1) {
+      setGameState(GameState.PlayerOneWin);
+    } else if (winner === 2) {
+      setGameState(GameState.PlayerTwoWin);
+    } else if (winner === -1) {
+      setGameState(GameState.Ongoing);
     }
+    // return (
+    //   <div className="player"
+    //   data-player={playerTurn}
+    //   ></div>
+    // )
   };
-  // console.log(style1,style2)
-
-  function restartGame() {
-    console.log("restart")
-    const board = [];
-    for (let i = 0; i < 64; i++) {
-      board.push(Player.None);
+  function undoClick(row: number, column: number) {
+    let tempBoard: any[][] = [];
+    for (let i = 0; i < 8; i++) {
+      tempBoard.push(board[i].slice());
     }
-    setNewGameState({ ...newGameState, board: board });
-  }
-  // console.log(newGameState.board)
-  function renderGameStatus() {
-    // console.log("yes")
-    const gameState = newGameState.gameState;
+    tempBoard[row][column] = Player.None;
+    if (playerTurn === 1) {
+      style2 = "5px solid orange";
 
+      style1 = "none";
+    } else if (playerTurn === 2) {
+      style1 = "5px solid orange";
+
+      style2 = "none";
+    }
+    return tempBoard;
+  }
+  function restartGame() {
+    setBoard(createBoard());
+  }
+
+  function renderGameStatus() {
     if (seq <= parseInt(totalGame)) {
-      if (gameState === GameState.Draw) {
-        playerWon = "Game Draw ";
-      } else if (
-        gameState === GameState.PlayerOneWin &&
-        seq <= parseInt(totalGame)
-      ) {
+      if (gameState === GameState.PlayerOneWin && seq <= parseInt(totalGame)) {
         setFirstPlayerScore(firstPlayerScore + 1);
         roundWinner = "Player One";
-        temp="Won"
-        playerWon = firstName + " won the round " + seq;
+        temp = "Won";
+        playerWon ="Congratulation " + firstName + " you won the round " + seq;
+        buttonStyle = "block";
+        undoButtonStyle = "none";
         setSeq(seq + 1);
         setStartGame(false);
-        //  console.log(startGame)
+        setGameState(GameState.Ongoing);
       } else if (
         gameState === GameState.PlayerTwoWin &&
         seq <= parseInt(totalGame)
       ) {
         setSecondPlayerScore(secondPlayerScore + 1);
-        //console.log(text);
         roundWinner = "Player Two";
-        temp="Won"
-        playerWon = secondName + " won the round " + seq;
+        temp = "Won";
+        playerWon ="Congratulation " + secondName + " you won the round " + seq;
+        buttonStyle = "block";
+        undoButtonStyle = "none";
         setSeq(seq + 1);
+        setGameState(GameState.Ongoing);
         setStartGame(false);
       }
-      // console.log(startGame)
-      // if (roundWinner === "Player One") {
-
-      //   setNewGameState({
-      //     board: restartGame(),
-      //     playerTurn: Player.One,
-      //     gameState: GameState.Ongoing,
-      //   });
-      // }
-      // if (roundWinner === "Player Two") {
-      //   setNewGameState({
-      //     board: restartGame(),
-      //     playerTurn: Player.Two,
-      //     gameState: GameState.Ongoing,
-      //   });
-      // }
-      // setStartGame(false)
+    } else {
       if (firstPlayerScore + secondPlayerScore === parseInt(totalGame)) {
         if (firstPlayerScore > secondPlayerScore) {
-          playerWon = firstName + " won the game";
+          playerWon ="Congratulation " + firstName + " you won the game";
+          buttonStyle = "none";
+          undoButtonStyle = "none";
           setFirstPlayerScore(0);
           setSecondPlayerScore(0);
-          setSeq(seq - 1);
+          setGameState(GameState.PlayerOneWin);
         } else if (firstPlayerScore < secondPlayerScore) {
-          playerWon = secondName + " won the game";
+          playerWon = "Congratulation " + secondName + " you won the game";
+          buttonStyle = "none";
+          undoButtonStyle = "none";
           setFirstPlayerScore(0);
           setSecondPlayerScore(0);
-          setSeq(seq - 1);
+          setGameState(GameState.PlayerTwoWin);
         } else if (firstPlayerScore === secondPlayerScore) {
           playerWon = "Game Draw";
+          buttonStyle = "none";
+          undoButtonStyle = "none";
           setFirstPlayerScore(0);
           setSecondPlayerScore(0);
-          setSeq(seq - 1);
+          setGameState(GameState.Draw);
         }
       }
-      // console.log(newGameState.board)
       if (roundWinner === "Player One") {
         style1 = "5px solid orange";
 
         style2 = "none";
-        // roundWinner = "";
-
-        setNewGameState({
-          ...newGameState,
-          playerTurn: Player.One,
-          gameState: GameState.Ongoing,
-        });
       }
       if (roundWinner === "Player Two") {
         style2 = "5px solid orange";
-
         style1 = "none";
-        // roundWinner = "";
-        setNewGameState({
-          ...newGameState,
-          playerTurn: Player.Two,
-          gameState: GameState.Ongoing,
-        });
       }
     }
-    // console.log("run")
     return (
       <div className="game">
-        {console.log(startGame)}
-        {roundWinner.length
-          ? (setNewGameState({
-              ...newGameState,
-              playerTurn: Player.One,
-              gameState: GameState.Ongoing,
-            }),roundWinner="") : (startGame && temp.length) ? (setNewGameState({...newGameState,board: initializeBoard()}),temp="") : console.log(roundWinner.length, roundWinner)}
-
+        
         <h3>{totalGame} Games Tournament</h3>
         <h2>{playerWon}</h2>
-        <h4>Playing game {seq}</h4>
+        <h4>Playing game {gameNo}</h4>
         <div className="box1">
           <div className="rect1_2">
             <img
@@ -236,7 +233,6 @@ function Game() {
               alt=""
               style={{ border: "" + style1, borderRadius: "40px" }}
             />
-            {/* {console.log(style1)} */}
             <div>
               <p>Player01</p>
               <p className="firstName">{firstName}</p>
@@ -245,7 +241,6 @@ function Game() {
             <h5>{firstPlayerScore}</h5>
           </div>
           <div className="rect2_1">
-            {/* {console.log(style1,style2)} */}
             <img
               src={photo1}
               alt=""
@@ -258,6 +253,35 @@ function Game() {
             <div className="score2">Score</div>
             <h5>{secondPlayerScore}</h5>
           </div>
+        </div>
+        <div>
+          <button
+            className="start"
+            style={{ display: "" + buttonStyle }}
+            onClick={() => {
+              restartGame();
+              setStartGame(true);
+              if (gameNo < parseInt(totalGame)) {
+                gameNo += 1;
+              }
+              buttonStyle = "none";
+              undoButtonStyle = "block";
+            }}
+          >
+            Start Game
+          </button>
+        </div>
+        <div>
+          <button
+            className="start"
+            style={{ display: "" + undoButtonStyle }}
+            onClick={() => {
+              setBoard(undoClick(lastClickedRow, lastClickedColumn));
+              setPlayerTurn(togglePlayerTurn(playerTurn));
+            }}
+          >
+            Undo Step
+          </button>
         </div>
 
         <Link to="/">
@@ -273,17 +297,9 @@ function Game() {
 
   return (
     <div className="App">
-      {/* {console.log("run")} */}
-
       <div>{renderGameStatus()}</div>
       <div className="board">{renderCells()}</div>
-      <div>
-        <button className="start" onClick={() => setStartGame(true)}>
-          Start Game
-        </button>
-      </div>
-    </div>
+     </div>
   );
 }
-
 export default Game;
