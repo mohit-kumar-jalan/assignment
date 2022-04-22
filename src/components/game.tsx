@@ -48,16 +48,17 @@ function Game() {
   }
 
   function renderCells() {
+    // console.log("run")
     const cells = [];
     for (let i = 0; i < 8; i++) {
       for (let j = 0; j < 8; j++) {
-        cells.push(renderCell(i, j, board[i][j]));
+        cells.push(renderCell(i, j));
       }
     }
     return cells;
   }
-  function renderCell(i: number, j: number, playerOccupied: number) {
-    // console.log(playerTurn)
+  function renderCell(i: number, j: number) {
+    // console.log(i,j)
     
     return (
       
@@ -65,7 +66,7 @@ function Game() {
         className="cell"
         // key={index}
         
-        data-player={getPrettyPlayer(playerOccupied)} // extract from current player
+        data-player={getPrettyPlayer(board[i][j])} // extract from current player
         onClick={() => {
           if (startGame) {
             buttonStyle = "none";
@@ -79,10 +80,10 @@ function Game() {
   }
   function handleOnClick(row: number, column: number) {
 
-    console.log(board[row][column])
-    if(board[row][column]===1) cp="playerOne"
-    else if(board[row][column]===2) cp="playertwo"
-    else cp="noplayer"
+    // console.log(board[row][column])
+    // if(board[row][column]===1) cp="playerOne"
+    // else if(board[row][column]===2) cp="playertwo"
+    // else cp="noplayer"
     
     undoButtonStyle = "block";
     setLastClickedRow(row);
