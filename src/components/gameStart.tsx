@@ -31,15 +31,26 @@ function StartGame() {
         </div>
       </div>
       <div className="total-game">
-        <p>Number of Games to be played</p>
-        <input type="text" onChange={(e) => setNoOfGame(e.target.value)} />
+        <p style={{ whiteSpace: "nowrap", color: "#869189", marginLeft: 20 }}>
+          Number of Games to be played
+        </p>
+        <input
+          type="text"
+          onChange={(e) => setNoOfGame(e.target.value)}
+          className="input-game"
+        />
       </div>
       <hr />
       <Link
-        to={"/game"}
+        to={firstName && secondName && noOfGame ? "/game" : "/"}
         state={{ fname: firstName, sname: secondName, totalgame: noOfGame }}
       >
-        <button className="startButton">Start Game</button>
+        <button
+          className="startButton"
+          disabled={firstName == "" || secondName == "" || noOfGame == ""}
+        >
+          Start Game
+        </button>
       </Link>
     </div>
   );

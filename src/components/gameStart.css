@@ -46,6 +46,10 @@
 
   background: #4b7bff;
   border-radius: 12px;
+  
+}
+.startButton:disabled {
+  background: grey;
 }
 
 hr {
@@ -157,4 +161,13 @@ button {
   border: 1px solid #cce2d3;
   box-sizing: border-box;
   border-radius: 10px;
+}
+.input-game {
+  position: absolute;
+  margin-left: 110px;
+  position: absolute;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #949494;
+  width: 400.5px;
 }
